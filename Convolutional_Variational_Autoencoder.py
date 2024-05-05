@@ -13,7 +13,7 @@ width = 33
 height = 65
 # Define the encoder network
 def encoder_fn():
-    input_layer = tf.keras.layers.Input(shape=(normal_train_CH1.shape[1], normal_train_CH1.shape[2], 1))
+    input_layer = tf.keras.layers.Input(shape=(width, height, 1))
     x = tf.keras.layers.Conv2D(filters=16, kernel_size=(3, 3), strides=2, activation="relu", padding="same")(input_layer)
     x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.MaxPooling2D(pool_size=(2, 2), padding="same")(x)
