@@ -848,43 +848,11 @@ train_abnormal_reconstruction_error = tf.reduce_sum(cross_ent_from_abnormal_data
 
 print(train_abnormal_reconstruction_error.shape)
 
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(8,5))
-#plot the reconstruction error for train normal and anomaly data
-plt.plot(train_normal_reconstruction_error[:400], "o", color='teal', label = 'federated_train_data')
-plt.plot(train_abnormal_reconstruction_error[:400], "o", color='brown', label = 'federated_abnormal_data')
-# plt.plot(test_reconstruction_error[:100], 'g-', label = 'federated_test_prediction')
-
-#plt.ylabel('Reconstruction Error')
-plt.legend()
-
-
 ## Step 4: Compute decision threshold
 
 #The decision threshold is computed based on the `train_normal_reconstruction_error` only
 
 decision_threshold = round(np.percentile(train_normal_reconstruction_error, 99),3)
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-plt.figure(figsize=(8,5))
-
-# Use different variables for sns.kdeplot objects
-plot1 = sns.kdeplot(train_normal_reconstruction_error, fill=True, color='teal',
-                  label='Unjammed (train, normal) reconstruction error')
-
-plot2 = sns.kdeplot(train_abnormal_reconstruction_error, fill=True, color='brown',
-                  label='Jammed (train, abnormal) reconstruction error')
-
-plt.axvline(decision_threshold, color='y', linewidth=3, linestyle='dashed',
-            label='Percentile-based Decision Threshold = {:0.3f}'.format(decision_threshold))
-
-plt.legend(loc='upper left')
-
-fig = plt.gcf()  # Get the current figure
-
 
 pred_test = []
 true_test = []
